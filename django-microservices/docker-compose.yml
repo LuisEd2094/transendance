@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - userservice
+
+  userservice:
+    build: ./userservice
+    ports:
+      - "8001:8000"
