@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import logging
+import logging.config
+from pythonjsonlogger import jsonlogger
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +31,42 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', 'gateway', 'userservice', 'chatservice']
 
 
-# Application definition
 
+# https://www.elastic.co/guide/en/apm/agent/python/current/django-support.html#django-setup
+ELASTIC_APM = {
+   'SERVICE_NAME': 'django',
+   'SECRET_TOKEN': '1234',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+            '()': jsonlogger.JsonFormatter,
+            'format': '%(asctime)s %(levelname)s %(name)s %(message)s',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/django.log',
+            'formatter': 'json',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+logging.config.dictConfig(LOGGING)
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,36 +160,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'logstash': {
-            '()': 'logstash_formatter.LogstashFormatterV1',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-        'logstash': {
-            'class': 'logging.handlers.SocketHandler',
-            'level': 'DEBUG',
-            'formatter': 'logstash',
-            'host': 'logstash',  # Logstash service name in Docker Compose
-            'port': 5044,  # Port Logstash is listening on
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'logstash'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}

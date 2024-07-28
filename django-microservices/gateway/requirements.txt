@@ -1,3 +1,5 @@
 Django>=3.2,<4.0
 requests  # Needed for making HTTP requests between services
 logstash-formatter
+elastic-apm
+python-json-logger

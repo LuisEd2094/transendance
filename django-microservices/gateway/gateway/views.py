@@ -4,7 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('django')
+logger.setLevel(logging.DEBUG)
+
 
 def test_logging(request):
     logger.debug('This is a debug message')
