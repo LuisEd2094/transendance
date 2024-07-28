@@ -1,7 +1,18 @@
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+def test_logging(request):
+    logger.debug('This is a debug message')
+    logger.info('This is an info message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
+    logger.critical('This is a critical message')
+    return HttpResponse("Log messages generated.")
 
 @csrf_exempt
 def create_user(request):
