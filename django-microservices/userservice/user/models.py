@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
+from django_prometheus.models import ExportModelOperationsMixin
 
-class CustomUser(AbstractUser):
+class CustomUser(ExportModelOperationsMixin('User'), AbstractUser):
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_set',  # Update the related_name
