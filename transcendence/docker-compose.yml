@@ -12,13 +12,15 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - logstashdata01:/var/log
+      - ${LOGSTASH_FOLDER}${GATEWAY_LOG}:/var/log/${GATEWAY_LOG}
+    env_file:
+      - .env
 
   usermanagement:
     container_name: usermanagement
     build: ./usermanagement
     volumes:
-      - logstashdata01:/var/log
+      - ${LOGSTASH_FOLDER}${USER_LOG}:/var/log/${USER_LOG}
     environment:
       - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
 
@@ -26,7 +28,7 @@ services:
     container_name: chat
     build: ./chat
     volumes:
-      - logstashdata01:/var/log
+      - ${LOGSTASH_FOLDER}${CHAT_LOG}:/var/log/${CHAT_LOG}
     environment:
       - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
 
@@ -34,7 +36,7 @@ services:
     container_name: gamestats
     build: ./gamestats
     volumes:
-      - logstashdata01:/var/log
+      - ${LOGSTASH_FOLDER}${GAMESTATS_LOG}:/var/log/${GAMESTATS_LOG}
     environment:
       - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
 
@@ -42,7 +44,7 @@ services:
     container_name: twofactor
     build: ./twofactor
     volumes:
-      - logstashdata01:/var/log
+      - ${LOGSTASH_FOLDER}${TWOFACTOR_LOG}:/var/log/${TWOFACTOR_LOG}
     environment:
       - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
 
@@ -253,41 +255,41 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/certs
+      device: ${CERTS_FOLDER}
       o: bind
   esdata01:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/esdata01
+      device: ${ESDATA_FOLDER}
       o: bind
   kibanadata:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/kibanadata
+      device: ${KIBANA_FOLDER}
       o: bind
   logstashdata01:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/logstashdata01
+      device: ${LOGSTASH_FOLDER}
       o: bind
   postgres-data:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/postgres-data
+      device: ${POSTGREE_FOLDER}
       o: bind
   prometheus-data:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/prometheus-data
+      device: ${PROMETHEUS_FOLDER}
       o: bind
   grafana-data:
     driver: local
     driver_opts:
       type: none
-      device: ./volumes/grafana-data
+      device: ${GRAFANA_FOLDER}
       o: bind

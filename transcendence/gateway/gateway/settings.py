@@ -14,6 +14,10 @@ from pathlib import Path
 import logging
 import logging.config
 from pythonjsonlogger import jsonlogger
+import os
+
+
+LOG_FILE= os.environ.get("GATEWAY_LOG", "gateway.log")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,7 +51,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/gateway.log',
+            'filename': f'/var/log/{LOG_FILE}',
             'formatter': 'json',
         },
     },

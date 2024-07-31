@@ -14,9 +14,10 @@ from pathlib import Path
 import logging
 import logging.config
 from pythonjsonlogger import jsonlogger
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_FILE= os.environ.get("USER_LOG", "usermanagement.log")
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,7 +47,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/usermanagement.log',
+            'filename': f'/var/log/{LOG_FILE}',
             'formatter': 'json',
         },
     },
