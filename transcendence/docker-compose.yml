@@ -64,7 +64,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ./Prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
       - prometheus-data:/prometheus
   grafana:
     image: grafana/grafana:11.1.1-ubuntu
@@ -153,7 +153,7 @@ services:
 
     volumes:
       - certs:/usr/share/logstash/certs
-      - ./logstash:/usr/share/logstash/pipeline:ro
+      - ./ELK/logstash:/usr/share/logstash/pipeline:ro
       - logstashdata01:/var/log
     environment:
       - xpack.monitoring.enabled=false
