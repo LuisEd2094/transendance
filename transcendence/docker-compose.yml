@@ -72,7 +72,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=newadmin
     volumes:
       - grafana-data:/var/lib/grafana
 
@@ -81,9 +81,11 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - ./ELK/setup_script.sh:/setup_script.sh
+      - ./setup/setup_script.sh:/setup_script.sh
+      - ./setup/grafana_script.sh:/grafana_script.sh
       - ./ELK/gateway_index.ndjson:/gateway_index.ndjson
       - ./ELK/gateway_dashboard.ndjson:/gateway_dashboard.ndjson
+      - ./Grafana/gateway_dashboard.json:/gateway_dashboard.json      
 
     user: "0"
     env_file:
