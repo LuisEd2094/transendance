@@ -26,15 +26,22 @@ stop :
 start : 
 	@$(COMPOSE) -f $(DOCKER_COMPOSE_FILE) start
 
+rebuild:
+	@$(COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --volumes
+	@$(COMPOSE) -f $(DOCKER_COMPOSE_FILE) up --build -d
+
+
+
 volumes: 
 	@echo Creating Volumes DIR
 	@mkdir -p $(VOLUMES)
 	@touch $(LOG_FILES)
 
 clean: stop
-	$(COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes
 	
 fclean: clean
+	@$(COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes
+
 	@docker system prune -af 
 	@sudo rm -rf $(VOLUMES)
 

@@ -85,8 +85,7 @@ services:
       - ./setup/grafana_script.sh:/grafana_script.sh
       - ./ELK/gateway_index.ndjson:/gateway_index.ndjson
       - ./ELK/gateway_dashboard.ndjson:/gateway_dashboard.ndjson
-      - ./Grafana/gateway_dashboard.json:/gateway_dashboard.json      
-
+      - ./Grafana/gateway_dashboard.json:/gateway_dashboard.json
     user: "0"
     env_file:
       - .env
