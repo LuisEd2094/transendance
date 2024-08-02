@@ -6,7 +6,7 @@
 [Prometheus docker](https://docs.docker.com/config/daemon/prometheus/)
 [Prometheus your own metrics](https://www.monterail.com/blog/prometheus-custom-metrics)
 
-
+[Grafana Provisions](https://grafana.com/docs/grafana/latest/administration/provisioning/)
 [Grafana contact points and rules](https://grafana.com/docs/grafana/latest/developers/http_api/alerting_provisioning/)
 Grafana
 To get jsonfile for a created dashboard, get UID from the URL and then call this address
