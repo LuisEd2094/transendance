@@ -33,12 +33,12 @@ SECRET_KEY = 'django-insecure-w@p@_o3z*ymi9ud^mv(zvc9f6uwgwa@prl+3o@pa+^6+x2j2!e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'gateway']
+ALLOWED_HOSTS = ['localhost', 'gateway', 'usermanagement']
 
 
 # Application definition
 
-LOGGING = {
+"""LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -64,7 +64,7 @@ LOGGING = {
     },
 }
 
-logging.config.dictConfig(LOGGING)
+logging.config.dictConfig(LOGGING)"""
 
 # Application definition
 INSTALLED_APPS = [

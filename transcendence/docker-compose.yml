@@ -6,6 +6,19 @@ networks:
 
 
 services:
+
+  db:
+    container_name: db
+    image: postgres:13
+    environment:
+      POSTGRES_DB: transcendence
+      POSTGRES_USER: transcendence
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
   gateway:
     container_name: gateway
     build: ./gateway
@@ -21,42 +34,33 @@ services:
     build: ./usermanagement
     volumes:
       - ${LOGSTASH_FOLDER}${USER_LOG}:/var/log/${USER_LOG}
-    environment:
-      - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
+    env_file:
+      - .env
 
   chat:
     container_name: chat
     build: ./chat
     volumes:
       - ${LOGSTASH_FOLDER}${CHAT_LOG}:/var/log/${CHAT_LOG}
-    environment:
-      - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
+    env_file:
+      - .env
 
   gamestats:
     container_name: gamestats
     build: ./gamestats
     volumes:
       - ${LOGSTASH_FOLDER}${GAMESTATS_LOG}:/var/log/${GAMESTATS_LOG}
-    environment:
-      - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
+    env_file:
+      - .env
 
   twofactor:
     container_name: twofactor
     build: ./twofactor
     volumes:
       - ${LOGSTASH_FOLDER}${TWOFACTOR_LOG}:/var/log/${TWOFACTOR_LOG}
-    environment:
-      - DATABASE_URL=postgres://postgres:mypassword@db:5432/mydatabase
+    env_file:
+      - .env
 
-  db:
-    container_name: db
-    image: postgres:13
-    environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
 
   prometheus:
     image: prom/prometheus:v2.53.1
